@@ -28,6 +28,9 @@ export default defineConfig({
 		emdash({
 			database: d1({ binding: "DB", session: "auto", coalesce: true }),
 			storage: r2({ binding: "MEDIA" }),
+			admin: {
+				favicon: "/favicon-32x32.png?v=2",
+			},
 		}),
 	],
 	fonts: [
