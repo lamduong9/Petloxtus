@@ -114,12 +114,32 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  const isInternalReferrer =
+    typeof document.referrer === "string" &&
+    document.referrer.startsWith(window.location.origin);
+
   if (leadGate) {
-    if (localStorage.getItem(STORAGE_KEYS.UNLOCKED) === "true") {
+    const hasHash = Boolean(window.location.hash && window.location.hash.length > 1);
+    if (
+      localStorage.getItem(STORAGE_KEYS.UNLOCKED) === "true" ||
+      hasHash ||
+      isInternalReferrer
+    ) {
       unlockSite(loadSavedProfile());
+      if (hasHash) {
+        const target = document.getElementById(window.location.hash.slice(1));
+        if (target) {
+          requestAnimationFrame(() => {
+            target.scrollIntoView({ behavior: "auto", block: "start" });
+          });
+        }
+      }
     } else {
       document.body.classList.add("gate-locked");
     }
+  } else {
+    // Visitor already browsing an internal page (/products, /services, etc.)
+    localStorage.setItem(STORAGE_KEYS.UNLOCKED, "true");
   }
 
   const skipGateBtn = document.getElementById("skip-gate-btn");

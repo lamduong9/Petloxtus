@@ -86,6 +86,10 @@ body.gate-locked #site-wrapper {
   transition: filter 0.55s ease, transform 0.55s ease;
 }
 
+section[id] {
+  scroll-margin-top: 96px;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -267,6 +271,10 @@ h1, h2, h3, h4 {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+html.gate-pre-unlocked body:not(.gate-locked) .lead-gate {
+  display: none;
 }
 
 .lead-gate__card {
