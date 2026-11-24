@@ -1,0 +1,25 @@
+/*
+  Petloxtus — EmDash Journal & CMS Theme Overrides
+  Harmonized with the Petloxtus logo (#DF7A27 terracotta-amber & #1E1B18 paw charcoal)
+  and warm natural oat/linen surfaces.
+*/
+
+:root {
+  --color-brand: light-dark(#c26317, #f2a154);
+  --color-brand-hover: light-dark(#9e4e10, #ffb974);
+  --color-on-brand: light-dark(#ffffff, #161412);
+  --color-brand-ring: light-dark(rgba(223, 122, 39, 0.25), rgba(242, 161, 84, 0.3));
+
+  --color-bg: light-dark(#f7f2ea, #161412);
+  --color-surface: light-dark(#fdfbf7, #211e1b);
+  --color-fill: light-dark(#efe6d8, #2b2622);
+  --color-text: light-dark(#1a1714, #f7f2ea);
+  --color-text-secondary: light-dark(#4e4740, #cbbba8);
+  --color-muted: light-dark(#766c62, #9b8f82);
+  --color-border: light-dark(#dfd2be, #38322c);
+  --color-ring: light-dark(rgba(26, 23, 20, 0.08), rgba(247, 242, 234, 0.1));
+
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+}

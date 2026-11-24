@@ -1,0 +1,54 @@
+---
+import { getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import HeadMeta from "../components/HeadMeta.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import QuoteModal from "../components/QuoteModal.astro";
+import { resolveWebhookUrl, getSeedFallbackPage } from "../data/catalog";
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", "privacy-policy");
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+const fallbackPage = !page ? getSeedFallbackPage("privacy-policy") : null;
+const pageTitle = page?.data.title || fallbackPage?.title || "Privacy Policy";
+const pageContent = page?.data.content || fallbackPage?.content || null;
+const webhookUrl = resolveWebhookUrl(Astro.locals);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <HeadMeta
+      title="Privacy Policy — Petloxtus Co., Ltd | petloxtus.com"
+      description="Privacy Policy of Petloxtus Co., Ltd (petloxtus.com) explaining how we collect, use, and protect your business and personal data."
+    />
+  </head>
+  <body data-webhook-url={webhookUrl}>
+    <SiteHeader active="other" showAnnouncement={false} />
+    <main>
+      <section class="products-hero">
+        <div class="container">
+          <span class="eyebrow eyebrow--light">Policies &amp; Compliance</span>
+          <h1 class="section-title section-title--light" style="margin-bottom: 0;">
+            {pageTitle}
+          </h1>
+        </div>
+      </section>
+      <section class="section section--cream">
+        <div class="container">
+          <article class="legal-card">
+            {pageContent ? (
+              <PortableText value={pageContent} />
+            ) : (
+              <p>Please contact info@petloxtus.com for our latest Privacy Policy.</p>
+            )}
+          </article>
+        </div>
+      </section>
+    </main>
+    <SiteFooter />
+    <QuoteModal />
+    <script src="/i18n.js?v=20261124" is:inline></script>
+    <script src="/script.js?v=20261124" is:inline></script>
+  </body>
+</html>

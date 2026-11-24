@@ -1,0 +1,210 @@
+---
+import { decodeSlug } from "emdash";
+import { PortableText } from "emdash/ui";
+import HeadMeta from "../../components/HeadMeta.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import QuoteModal from "../../components/QuoteModal.astro";
+import { loadProductBySlug, loadAllProducts, resolveWebhookUrl } from "../../data/catalog";
+
+const slug = decodeSlug(Astro.params.slug);
+if (!slug) {
+  return Astro.rewrite("/404");
+}
+
+const [{ product, cacheHint }, { products: allProducts }] = await Promise.all([
+  loadProductBySlug(slug),
+  loadAllProducts(),
+]);
+
+if (!product) {
+  return Astro.rewrite("/404");
+}
+
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+
+const related = allProducts
+  .filter((p) => p.slug !== product.slug && p.category === product.category)
+  .slice(0, 3);
+
+const webhookUrl = resolveWebhookUrl(Astro.locals);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <HeadMeta
+      title={`${product.title} — Petloxtus Export | petloxtus.com`}
+      description={product.shortDescription || `${product.title} manufactured in Vietnam by Petloxtus Co., Ltd.`}
+      ogImage={product.primaryImage}
+    />
+  </head>
+  <body data-webhook-url={webhookUrl}>
+    <SiteHeader active="products" showAnnouncement={false} quoteProduct={product.title} />
+
+    <main class="detail-wrap">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/" data-i18n="nav_home">Home</a>
+          <span>/</span>
+          <a href="/products" data-i18n="nav_products">Products</a>
+          <span>/</span>
+          <a href={`/products?category=${encodeURIComponent(product.category)}`}>{product.category}</a>
+          <span>/</span>
+          <span>{product.title}</span>
+        </nav>
+
+        <div class="detail-grid">
+          <div>
+            <div class="detail-media">
+              <img
+                id="detail-main-img"
+                src={product.primaryImage}
+                alt={product.title}
+                class="detail-media__main"
+              />
+            </div>
+
+            {product.gallery.length > 1 && (
+              <div class="detail-thumbs" aria-label="Product gallery thumbnails">
+                {product.gallery.map((src, idx) => (
+                  <button
+                    type="button"
+                    class={`detail-thumb ${idx === 0 ? "is-active" : ""}`}
+                    data-src={src}
+                    aria-label={`View image ${idx + 1}`}
+                  >
+                    <img src={src} alt={`${product.title} view ${idx + 1}`} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <span class="eyebrow">{product.category}</span>
+            <h1 class="section-title" style="margin-bottom: 16px; font-size: clamp(1.95rem, 3.2vw, 2.75rem);">
+              {product.title}
+            </h1>
+            <p class="section-subtitle" style="margin-bottom: 20px;">
+              {product.shortDescription}
+            </p>
+
+            <div class="spec-chips">
+              {product.specs.map((chip) => (
+                <span class="spec-chip">{chip}</span>
+              ))}
+            </div>
+
+            <div class="detail-specs-box">
+              <h4 data-i18n="detail_readiness">Factory Export &amp; OEM Readiness</h4>
+              <ul>
+                <li>
+                  <strong data-i18n="detail_spec_1_b">Pricing Terms:</strong>{" "}
+                  <span data-i18n="detail_spec_1_t">
+                    Factory-Direct B2B Quotation Only (FOB Hai Phong / Cat Lai or CIF / Air)
+                  </span>
+                </li>
+                <li>
+                  <strong data-i18n="detail_spec_2_b">MOQ &amp; Customization:</strong>{" "}
+                  <span data-i18n="detail_spec_2_t">
+                    Low MOQ (1,000 PCS) • Custom size, color, wood/material &amp; private-label packaging
+                  </span>
+                </li>
+                <li>
+                  <strong data-i18n="detail_spec_3_b">Certifications:</strong>{" "}
+                  <span data-i18n="detail_spec_3_t">
+                    BSCI, IEPT, CVS, Walmart (FCCA &amp; SCS), Sedex, FSC, ISO9001, GSV
+                  </span>
+                </li>
+                <li>
+                  <strong data-i18n="detail_spec_4_b">Samples &amp; Lead Time:</strong>{" "}
+                  <span data-i18n="detail_spec_4_t">
+                    Samples in 7–10 days • Bulk production 30–45 business days • 95–98% similarity
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+              <button
+                type="button"
+                class="btn btn--brand js-open-quote"
+                data-product={product.title}
+                data-i18n="btn_req_quote"
+              >
+                Request Quote
+              </button>
+              <a href="/products" class="btn btn--outline" data-i18n="btn_back_products">
+                ← Back to All Products
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Full Product Description migrated from petloxtus.com -->
+        {product.description.length > 0 && (
+          <section class="detail-rich-description" aria-label="Full Product Specifications">
+            <span class="eyebrow">Full Product Specifications &amp; Details</span>
+            <PortableText value={product.description} />
+          </section>
+        )}
+
+        <!-- Related Products in Same Category -->
+        {related.length > 0 && (
+          <section style="margin-top: 68px;">
+            <div class="catalog-header" style="margin-bottom: 28px;">
+              <div>
+                <span class="eyebrow">More in {product.category}</span>
+                <h2 class="section-title" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">
+                  Related Pet Products
+                </h2>
+              </div>
+              <a href={`/products?category=${encodeURIComponent(product.category)}`} class="btn btn--outline btn--sm">
+                View All {product.category} →
+              </a>
+            </div>
+
+            <div class="product-grid product-grid--3">
+              {related.map((item) => (
+                <article class="product-card">
+                  <div class="product-card__media">
+                    <a href={`/products/${item.slug}`}>
+                      <img src={item.primaryImage} alt={item.title} loading="lazy" />
+                    </a>
+                    <span class="product-card__tag">{item.category}</span>
+                  </div>
+                  <div class="product-card__body">
+                    <h3>
+                      <a href={`/products/${item.slug}`}>{item.title}</a>
+                    </h3>
+                    <p class="product-card__desc">{item.shortDescription}</p>
+                    <div class="product-card__footer">
+                      <a href={`/products/${item.slug}`} class="spec-link" data-i18n="btn_details">
+                        Details
+                      </a>
+                      <button
+                        type="button"
+                        class="btn btn--brand btn--sm js-open-quote"
+                        data-product={item.title}
+                        data-i18n="btn_req_quote"
+                      >
+                        Request Quote
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </main>
+
+    <SiteFooter quoteProduct={product.title} />
+    <QuoteModal defaultProduct={product.title} />
+
+    <script src="/i18n.js?v=20261124" is:inline></script>
+    <script src="/script.js?v=20261124" is:inline></script>
+  </body>
+</html>

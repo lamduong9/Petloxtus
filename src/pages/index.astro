@@ -1,0 +1,895 @@
+---
+import HeadMeta from "../components/HeadMeta.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import QuoteModal from "../components/QuoteModal.astro";
+import { loadAllProducts, getCategoryCounts, resolveWebhookUrl } from "../data/catalog";
+
+const { products, cacheHint } = await loadAllProducts();
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+
+const categoryCounts = getCategoryCounts(products);
+const featuredProducts = products.filter((p) => p.featured).slice(0, 8);
+const displayProducts = featuredProducts.length > 0 ? featuredProducts : products.slice(0, 8);
+const webhookUrl = resolveWebhookUrl(Astro.locals);
+
+const faqs = [
+  {
+    qKey: "faq_1_q",
+    aKey: "faq_1_a",
+    q: "Does the company offer custom manufacturing based on customer design?",
+    a: "Yes, our company offers custom manufacturing based on the customer's own design, ensuring the right materials, styles, and dimensions. Our technical team will provide consultation and turn your ideas into high-quality products tailored to your specific needs.",
+  },
+  {
+    qKey: "faq_2_q",
+    aKey: "faq_2_a",
+    q: "What kind of pet products does PETLOXTUS specialize in?",
+    a: "PETLOXTUS specializes in designing and manufacturing high-quality pet products such as beds, wooden accessories, silicone items, metal cages, cat trees, E-TPU chew toys, reed & water hyacinth baskets, plastic accessories, and pet apparel – serving both domestic and international markets.",
+  },
+  {
+    qKey: "faq_3_q",
+    aKey: "faq_3_a",
+    q: "What makes PETLOXTUS different?",
+    a: "PETLOXTUS stands out for its exceptional quality, handcrafted designs, competitive factory-direct pricing, dedicated after-sales service, and strong OEM/ODM customization capabilities for brand partners.",
+  },
+  {
+    qKey: "faq_4_q",
+    aKey: "faq_4_a",
+    q: "Are PETLOXTUS products safe for pets?",
+    a: "Absolutely. All of our products are made from non-toxic, environmentally friendly materials and meet high safety standards and import regulations for pets.",
+  },
+  {
+    qKey: "faq_5_q",
+    aKey: "faq_5_a",
+    q: "Does PETLOXTUS offer OEM & ODM services?",
+    a: "Yes. PETLOXTUS provides full OEM (custom manufacturing) and ODM (custom design) services for product lines such as pet beds, wooden goods, silicone items, cat trees, chew toys, metal cages, and pet apparel, along with customizable packaging solutions.",
+  },
+  {
+    qKey: "faq_6_q",
+    aKey: "faq_6_a",
+    q: "Can I request custom packaging for my products?",
+    a: "Yes. PETLOXTUS offers a variety of custom packaging options, including laser logo engraving, kraft & tag labels, inner/outer retail boxes, and master cartons – all designed to enhance your brand identity.",
+  },
+  {
+    qKey: "faq_7_q",
+    aKey: "faq_7_a",
+    q: "How does PETLOXTUS ensure product quality?",
+    a: "We implement a strict quality control process, from sourcing raw materials to final packaging. Our QC team oversees each stage to ensure every product meets the highest standards with a 95%–98% sample similarity guarantee.",
+  },
+  {
+    qKey: "faq_8_q",
+    aKey: "faq_8_a",
+    q: "How quickly does PETLOXTUS respond to customer inquiries?",
+    a: "PETLOXTUS is committed to responding to all customer questions and feedback within 24 hours, and providing full project quotations within 72 hours.",
+  },
+  {
+    qKey: "faq_9_q",
+    aKey: "faq_9_a",
+    q: "Does PETLOXTUS ensure confidentiality for business partners?",
+    a: "Yes. PETLOXTUS is fully committed to protecting confidential information and is ready to sign Non-Disclosure Agreements (NDAs) to safeguard your business ideas throughout the collaboration.",
+  },
+  {
+    qKey: "faq_10_q",
+    aKey: "faq_10_a",
+    q: "Which markets does PETLOXTUS export to?",
+    a: "PETLOXTUS has officially expanded into international markets and is currently supplying products to partners in Europe, North America, Asia, and Australia.",
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <HeadMeta
+      title="PETLOXTUS — One-Stop Vietnam Custom Pet Product Manufacturer & Sourcing | petloxtus.com"
+      description="Petloxtus is a professional Vietnam pet product manufacturer & sourcing company with a 2,000 m² factory and 10+ years of experience crafting pet beds, wooden accessories, cat trees, silicone feeders, metal cages, E-TPU chew toys, and pet clothing."
+    />
+  </head>
+  <body class="gate-locked" data-webhook-url={webhookUrl}>
+    <!-- 0. B2B PARTNER ACCESS PORTAL (LEAD GATE OVERLAY) -->
+    <div id="lead-gate" class="lead-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <div class="lead-gate__card">
+        <div class="lead-gate__visual">
+          <img src="/assets/factory-craft.webp" alt="Petloxtus Vietnam Pet Product Manufacturing Workshop" class="lead-gate__bg-img" />
+          <div class="lead-gate__visual-inner">
+            <div class="lead-gate__brand">
+              <div class="lead-gate__logo-pill">
+                <img src="/assets/logo.png" alt="PETLOXTUS Logo" class="lead-gate__logo" />
+              </div>
+            </div>
+            <div class="lead-gate__pitch">
+              <h2 id="gate-title" data-i18n="gate_pitch_title">
+                One-Stop Vietnam Custom Pet Product Manufacturer &amp; Sourcing.
+              </h2>
+              <p data-i18n="gate_pitch_desc">
+                Unlock our wholesale specification catalog of 71+ factory-direct pet products, full OEM/ODM customization options, and direct B2B export quotation portal.
+              </p>
+              <ul class="lead-gate__perks">
+                <li data-i18n="gate_perk_1">2,000 m² Factory • 50 Skilled Workers &amp; 20-Member Sourcing Team</li>
+                <li data-i18n="gate_perk_2">BSCI, FSC, Sedex, ISO9001, GSV &amp; Walmart (FCCA, SCS) Certified</li>
+                <li data-i18n="gate_perk_3">95%–98% Similarity Guarantee • Low MOQ (1,000 PCS) • 7–10 Day Samples</li>
+              </ul>
+            </div>
+            <div class="lead-gate__certs">
+              <span class="cert-pill">BSCI</span>
+              <span class="cert-pill">FSC</span>
+              <span class="cert-pill">ISO 9001</span>
+              <span class="cert-pill">Sedex</span>
+              <span class="cert-pill">Walmart FCCA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lead-gate__form-wrap">
+          <div class="lead-gate__top-bar">
+            <span class="gate-badge">🔒 <span data-i18n="gate_badge">B2B Factory Portal</span></span>
+            <select aria-label="Select Language" class="lang-select js-lang-switcher">
+              <option value="en">🇬🇧 English</option>
+              <option value="vi">🇻🇳 Tiếng Việt</option>
+              <option value="zh">🇨🇳 中文</option>
+              <option value="ja">🇯🇵 日本語</option>
+              <option value="ko">🇰🇷 한국어</option>
+              <option value="de">🇩🇪 Deutsch</option>
+              <option value="fr">🇫🇷 Français</option>
+            </select>
+          </div>
+
+          <h3 data-i18n="gate_form_title">Unlock Partner Portal</h3>
+          <p class="lead-gate__hint" data-i18n="gate_form_hint">
+            Enter your business contact details to access full factory-direct specifications and request custom OEM/ODM quotations.
+          </p>
+
+          <form id="lead-gate-form" class="form-grid" novalidate>
+            <div class="form-group">
+              <label for="gate-company"><span data-i18n="lbl_company">Company Name</span> <span>*</span></label>
+              <input
+                type="text"
+                id="gate-company"
+                name="company"
+                class="form-control"
+                required
+                data-i18n-placeholder="ph_company"
+                placeholder="e.g. Global Pet Supply Co. / Retail Group"
+              />
+            </div>
+            <div class="form-group">
+              <label for="gate-email"><span data-i18n="lbl_email">Business Email</span> <span>*</span></label>
+              <input
+                type="email"
+                id="gate-email"
+                name="email"
+                class="form-control"
+                required
+                data-i18n-placeholder="ph_email"
+                placeholder="sourcing@yourcompany.com"
+              />
+            </div>
+            <div class="form-group">
+              <label for="gate-phone"><span data-i18n="lbl_phone">Phone / WhatsApp</span> <span>*</span></label>
+              <input
+                type="tel"
+                id="gate-phone"
+                name="phone"
+                class="form-control"
+                required
+                data-i18n-placeholder="ph_phone"
+                placeholder="+1 / +44 / +84 ..."
+              />
+            </div>
+            <div class="form-group">
+              <label for="gate-country" data-i18n="lbl_country">Destination Market (Optional)</label>
+              <input
+                type="text"
+                id="gate-country"
+                name="country"
+                class="form-control"
+                data-i18n-placeholder="ph_country"
+                placeholder="e.g. USA, Germany, Australia, Japan..."
+              />
+            </div>
+            <button type="submit" class="btn btn--brand btn--full" data-i18n="gate_submit">
+              Unlock &amp; Enter Petloxtus
+            </button>
+            <div id="lead-gate-status" class="form-status" aria-live="polite"></div>
+          </form>
+
+          <p class="lead-gate__privacy" data-i18n="gate_privacy">
+            Your details are strictly confidential. NDA available for all OEM/ODM projects.
+          </p>
+          <button type="button" id="skip-gate-btn" class="lead-gate__skip" data-i18n="gate_skip">
+            Continue as Guest to Browse Catalog →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN WEBSITE WRAPPER -->
+    <div id="site-wrapper">
+      <SiteHeader active="home" />
+
+      <main id="top">
+        <!-- 3. HERO SECTION -->
+        <section class="hero">
+          <div class="container hero-grid">
+            <div class="hero__content">
+              <span class="eyebrow" data-i18n="hero_eyebrow">
+                Vietnam Pet Product Factory • 2,000 m² • 10+ Years Experience
+              </span>
+              <h1 class="hero__title">
+                <span data-i18n="hero_title_1">One-Stop Vietnam Custom</span><br />
+                <em data-i18n="hero_title_em">Pet Product Manufacturer.</em>
+              </h1>
+              <p class="hero__desc" data-i18n="hero_desc">
+                Petloxtus is a professional manufacturer and sourcing company specializing in high-quality pet products with over 10 years of experience. From our 2,000 m² Vietnam factory and 20-member sourcing team, we deliver safe, durable, factory-direct pet beds, wooden accessories, cat trees, silicone items, metal cages, E-TPU chew toys, and pet apparel worldwide.
+              </p>
+              <ul class="hero__bullets">
+                <li><span>✓</span> <strong data-i18n="hero_b1">95%–98% Similarity Guarantee</strong></li>
+                <li><span>✓</span> <strong data-i18n="hero_b2">Low MOQ (1,000 PCS) • Low Risk</strong></li>
+                <li><span>✓</span> <strong data-i18n="hero_b3">100% Pet-Safe &amp; Import Compliant</strong></li>
+                <li><span>✓</span> <strong data-i18n="hero_b4">Full OEM / ODM &amp; Custom Packaging</strong></li>
+              </ul>
+              <div class="hero__ctas">
+                <button
+                  type="button"
+                  class="btn btn--brand js-open-quote"
+                  data-product="Full B2B Factory Catalog & Price Sheet"
+                  data-i18n="hero_cta_primary"
+                >
+                  Request Export Quote
+                </button>
+                <a href="/products" class="btn btn--outline" data-i18n="hero_cta_secondary">
+                  Explore {products.length}+ Products
+                </a>
+              </div>
+              <div class="hero__trust-note">
+                <span class="hero__trust-stars" aria-hidden="true">★★★★★</span>
+                <span data-i18n="hero_trust">
+                  Supplying pet brands &amp; retailers across Europe, North America, Asia &amp; Australia
+                </span>
+              </div>
+            </div>
+
+            <div class="hero__media">
+              <div class="hero__img-frame">
+                <img
+                  src="/assets/hero-showcase.webp"
+                  alt="Handcrafted Vietnamese natural wood cat tree, woven water hyacinth pet bed, and terracotta pet bowl by Petloxtus"
+                />
+              </div>
+              <div class="hero__float-card">
+                <div class="hero__float-stat">
+                  <strong>10+</strong>
+                  <span data-i18n="hero_stat_1_lbl">Years Experience</span>
+                </div>
+                <div class="hero__float-divider"></div>
+                <div class="hero__float-stat">
+                  <strong>2,000 m²</strong>
+                  <span data-i18n="hero_stat_2_lbl">Vietnam Factory</span>
+                </div>
+                <div class="hero__float-divider"></div>
+                <div class="hero__float-stat">
+                  <strong>72h</strong>
+                  <span data-i18n="hero_stat_3_lbl">Quote Response</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. SOCIAL PROOF / CERTIFICATIONS STRIP -->
+        <section class="trust-strip" aria-label="Factory Certifications">
+          <div class="container">
+            <div class="trust-strip__track">
+              <span class="trust-item"><i>✦</i> <span data-i18n="trust_1">BSCI &amp; Sedex Audited</span></span>
+              <span class="trust-item"><i>✦</i> <span data-i18n="trust_2">Walmart FCCA &amp; SCS</span></span>
+              <span class="trust-item"><i>✦</i> <span data-i18n="trust_3">FSC Certified Wood</span></span>
+              <span class="trust-item"><i>✦</i> <span data-i18n="trust_4">ISO 9001 Quality</span></span>
+              <span class="trust-item"><i>✦</i> <span data-i18n="trust_5">IEPT, CVS &amp; GSV</span></span>
+              <span class="trust-item"><i>✦</i> <span data-i18n="trust_6">NDA IP Protection</span></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. WHY CHOOSE PETLOXTUS + COMPARISON -->
+        <section id="why-us" class="section section--cream">
+          <div class="container">
+            <div class="origin-split reveal">
+              <div class="origin-visual">
+                <div class="origin-visual__main">
+                  <img
+                    src="/assets/factory-craft.webp"
+                    alt="Vietnamese artisans crafting natural wood pet furniture and water hyacinth beds at Petloxtus factory"
+                  />
+                </div>
+                <span class="origin-visual__caption" data-i18n="why_caption">
+                  Petloxtus Vietnam Factory • Ninh Binh, Vietnam
+                </span>
+              </div>
+              <div>
+                <span class="eyebrow" data-i18n="why_eyebrow">Why Choose Petloxtus</span>
+                <h2 class="section-title" data-i18n="why_title">
+                  Vietnam Tariff Advantage. Direct Craftsmanship. Global Compliance.
+                </h2>
+                <p class="section-subtitle" data-i18n="why_desc">
+                  Vietnam holds a pivotal position in global manufacturing with substantial tax and tariff incentives, allowing your pet brand to diversify its supply chain and improve margins. Located near raw material regions in Ninh Binh, our 2,000 m² factory and English-fluent project coordinators deliver factory-direct value from concept to global shipping.
+                </p>
+                <div class="origin-metrics">
+                  <div class="metric-box">
+                    <strong>2,000 m²</strong>
+                    <span data-i18n="metric_1_lbl">Factory Area</span>
+                  </div>
+                  <div class="metric-box">
+                    <strong>70+</strong>
+                    <span data-i18n="metric_2_lbl">Artisans &amp; Sourcing</span>
+                  </div>
+                  <div class="metric-box">
+                    <strong>95–98%</strong>
+                    <span data-i18n="metric_3_lbl">Sample Similarity</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="comparison-card reveal">
+              <div class="comparison-col comparison-col--brand">
+                <h3 data-i18n="comp_brand_title">✦ Petloxtus Direct Factory &amp; Sourcing</h3>
+                <ul class="comparison-list">
+                  <li>
+                    <span class="icon-yes">✓</span>
+                    <span>
+                      <strong data-i18n="comp_b1_b">Advantageous Vietnam Location:</strong>{" "}
+                      <span data-i18n="comp_b1_t">Diversify supply chains with Vietnam tariff incentives and factories positioned directly near natural raw materials.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="icon-yes">✓</span>
+                    <span>
+                      <strong data-i18n="comp_b2_b">95%–98% Similarity &amp; Full-Step QC:</strong>{" "}
+                      <span data-i18n="comp_b2_t">Strict inspection from raw materials to final master carton, 100% pet-safe and compliant with EU, US &amp; AU regulations.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="icon-yes">✓</span>
+                    <span>
+                      <strong data-i18n="comp_b3_b">Complete OEM / ODM &amp; Packaging:</strong>{" "}
+                      <span data-i18n="comp_b3_t">Low 1,000 PCS MOQ with laser engraving, kraft labels, tag labels, retail boxes, and custom tooling.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="icon-yes">✓</span>
+                    <span>
+                      <strong data-i18n="comp_b4_b">First-Class Service &amp; NDA Protection:</strong>{" "}
+                      <span data-i18n="comp_b4_t">English-fluent coordinators, 24-hour inquiry response, 72-hour quotes, and signed NDAs safeguarding your designs.</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div class="comparison-col">
+                <h3 data-i18n="comp_conv_title">Conventional Trading Brokers</h3>
+                <ul class="comparison-list">
+                  <li>
+                    <span class="icon-no">✕</span>
+                    <span>
+                      <strong data-i18n="comp_c1_b">Multi-Layer Markups &amp; Tariffs:</strong>{" "}
+                      <span data-i18n="comp_c1_t">Hidden middleman commissions and heavy import duties erode your retail margins.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="icon-no">✕</span>
+                    <span>
+                      <strong data-i18n="comp_c2_b">Unverified Factory Quality:</strong>{" "}
+                      <span data-i18n="comp_c2_t">Sample-to-bulk inconsistency, non-compliant materials, and zero on-site quality inspection.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="icon-no">✕</span>
+                    <span>
+                      <strong data-i18n="comp_c3_b">Rigid High MOQs:</strong>{" "}
+                      <span data-i18n="comp_c3_t">Little customization flexibility, generic off-the-shelf packaging, and slow sample cycles.</span>
+                    </span>
+                  </li>
+                  <li>
+                    <span class="icon-no">✕</span>
+                    <span>
+                      <strong data-i18n="comp_c4_b">Communication Delays &amp; IP Risk:</strong>{" "}
+                      <span data-i18n="comp_c4_t">Language barriers, slow responses, and no legal confidentiality protection for exclusive designs.</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. B2B EXPORT PRODUCT PORTFOLIO (DYNAMICALLY LOADED FROM EMDASH CMS) -->
+        <section id="catalog" class="section section--sand">
+          <div class="container">
+            <div class="catalog-header reveal">
+              <div>
+                <span class="eyebrow" data-i18n="catalog_eyebrow">B2B Manufacturing Portfolio</span>
+                <h2 class="section-title" data-i18n="catalog_title">
+                  {products.length}+ Custom Pet Products Across {categoryCounts.length} Core Categories
+                </h2>
+                <p class="section-subtitle" data-i18n="catalog_sub">
+                  Every product is available for custom sizing, color, material, and private-label packaging. No fixed retail pricing — request a tailored factory-direct FOB/CIF quotation directly.
+                </p>
+              </div>
+              <button
+                type="button"
+                class="btn btn--dark js-open-quote"
+                data-product="Full B2B Factory Catalog & Price Sheet"
+                data-i18n="catalog_btn_all"
+              >
+                Get Full B2B Price Sheet
+              </button>
+            </div>
+
+            <!-- 9 Category Quick-Links -->
+            <div class="category-strip reveal" aria-label="Product Categories">
+              {categoryCounts.map((cat) => (
+                <a href={`/products?category=${encodeURIComponent(cat.name)}`} class="category-pill">
+                  {cat.name} <span>{cat.count}</span>
+                </a>
+              ))}
+            </div>
+
+            <!-- Featured Flagship Products Grid (from EmDash CMS) -->
+            <div class="product-grid">
+              {displayProducts.map((prod) => (
+                <article class="product-card reveal">
+                  <div class="product-card__media">
+                    <a href={`/products/${prod.slug}`}>
+                      <img src={prod.primaryImage} alt={prod.title} loading="lazy" />
+                    </a>
+                    <span class="product-card__tag">{prod.category}</span>
+                  </div>
+                  <div class="product-card__body">
+                    <h3>
+                      <a href={`/products/${prod.slug}`}>{prod.title}</a>
+                    </h3>
+                    <p class="product-card__desc">{prod.shortDescription}</p>
+                    <div class="spec-chips">
+                      {prod.specs.map((chip) => (
+                        <span class="spec-chip">{chip}</span>
+                      ))}
+                    </div>
+                    <div class="product-card__footer">
+                      <span class="moq-note">{prod.moq}</span>
+                      <div class="product-card__actions">
+                        <a href={`/products/${prod.slug}`} class="spec-link" data-i18n="btn_details">
+                          Details
+                        </a>
+                        <button
+                          type="button"
+                          class="btn btn--brand btn--sm js-open-quote"
+                          data-product={prod.title}
+                          data-i18n="btn_req_quote"
+                        >
+                          Request Quote
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div class="catalog-more-wrap reveal">
+              <a href="/products" class="btn btn--dark" data-i18n="btn_view_all_products">
+                Explore All {products.length}+ Products →
+              </a>
+            </div>
+
+            <!-- 4-Tile Material & Craftsmanship Ribbon -->
+            <div class="craft-band reveal">
+              <div class="craft-band__head">
+                <div>
+                  <span class="eyebrow eyebrow--light" data-i18n="craft_eyebrow">
+                    Signature Materials &amp; Capabilities
+                  </span>
+                  <h3
+                    class="section-title section-title--light"
+                    style="font-size: clamp(1.75rem, 3vw, 2.4rem); margin-bottom: 4px;"
+                    data-i18n="craft_title"
+                  >
+                    Four Material Pillars of Petloxtus Manufacturing
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  class="btn btn--outline-light btn--sm js-open-quote"
+                  data-product="Custom Sample Kit (7–10 Days)"
+                  data-i18n="craft_btn"
+                >
+                  Request Custom Samples (7–10 Days)
+                </button>
+              </div>
+              <div class="craft-grid">
+                <div class="craft-tile craft-tile--terracotta">
+                  <div class="craft-tile__num">01</div>
+                  <h4 data-i18n="craft_1_title">Natural Wood &amp; Cat Trees</h4>
+                  <p data-i18n="craft_1_desc">
+                    FSC-certified solid wood cat towers, scratching posts, hideaways, elevated feeders, and pet houses crafted with smooth, pet-safe finishes.
+                  </p>
+                </div>
+                <div class="craft-tile craft-tile--walnut">
+                  <div class="craft-tile__num">02</div>
+                  <h4 data-i18n="craft_2_title">Plush Beds &amp; Pet Apparel</h4>
+                  <p data-i18n="craft_2_desc">
+                    Calming fluffy dog beds, raised wooden-leg cat sofas, washable mats, winter sweaters, fleece coats, and post-surgery recovery suits.
+                  </p>
+                </div>
+                <div class="craft-tile craft-tile--sage">
+                  <div class="craft-tile__num">03</div>
+                  <h4 data-i18n="craft_3_title">Reed &amp; Water Hyacinth</h4>
+                  <p data-i18n="craft_3_desc">
+                    Hand-woven Vietnamese natural water hyacinth and reed pet baskets, condos, and loofah mats — breathable, artisanal, and biodegradable.
+                  </p>
+                </div>
+                <div class="craft-tile craft-tile--slate">
+                  <div class="craft-tile__num">04</div>
+                  <h4 data-i18n="craft_4_title">Silicone, E-TPU Toys &amp; Metal Cages</h4>
+                  <p data-i18n="craft_4_desc">
+                    Non-toxic food-grade silicone bowls &amp; mats, ultra-elastic E-TPU chew toys, durable ABS litter boxes, and foldable rust-resistant metal cages.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. END-TO-END OEM/ODM SERVICES & CRAFTSMANSHIP GALLERY -->
+        <section id="services" class="section section--cream">
+          <div class="container">
+            <div class="text-center reveal">
+              <span class="eyebrow" data-i18n="services_eyebrow">End-to-End OEM &amp; ODM Services</span>
+              <h2 class="section-title" data-i18n="services_title">
+                From Initial Concept to Global Retail Shelves
+              </h2>
+              <p class="section-subtitle" data-i18n="services_sub">
+                PETLOXTUS provides a complete, end-to-end solution — from design and manufacturing to program management — tailored to meet each retailer's unique needs.
+              </p>
+            </div>
+
+            <div class="people-grid">
+              <article class="story-photo-card reveal">
+                <img
+                  src="/assets/oem-packaging.webp"
+                  alt="Custom OEM/ODM eco-friendly pet product packaging, kraft boxes, laser-engraved wooden tags, silicone mats, and E-TPU chew toys"
+                  loading="lazy"
+                />
+                <div class="story-photo-card__content">
+                  <span data-i18n="story_2_eyebrow">Brand Packaging &amp; Full-Step QC</span>
+                  <h3 data-i18n="story_2_title">Custom Packaging &amp; 95%–98% Sample Similarity</h3>
+                  <p data-i18n="story_2_desc">
+                    Laser engraving, woven tag labels, kraft retail boxes, and master cartons — every single piece is inspected in our factory against your exact specifications before loading.
+                  </p>
+                </div>
+              </article>
+
+              <article class="story-photo-card reveal">
+                <img
+                  src="/assets/qc-inspection.webp"
+                  alt="Petloxtus quality control specialist inspecting solid wood cat tower and plush bed before export shipment"
+                  loading="lazy"
+                />
+                <div class="story-photo-card__content">
+                  <span data-i18n="story_1_eyebrow">Skilled Artisans &amp; Sourcing • Vietnam</span>
+                  <h3 data-i18n="story_1_title">50 Skilled Factory Workers &amp; 20 Sourcing Specialists</h3>
+                  <p data-i18n="story_1_desc">
+                    We combine in-house craftsmanship at our 2,000 m² Ninh Binh facility with a dedicated 20-member Vietnam sourcing team to develop exclusive, multi-material pet collections.
+                  </p>
+                </div>
+              </article>
+            </div>
+
+            <!-- 6 Core Services from petloxtus.com/blog/ (Service page) -->
+            <div class="services-grid">
+              <article class="service-card reveal">
+                <div class="service-card__icon">01</div>
+                <h3 data-i18n="srv_1_title">Tailored Product Development</h3>
+                <p data-i18n="srv_1_desc">
+                  Our teams collaborate on exclusive products tailored to your brand's needs — whether refreshing existing product lines or creating new-to-market concepts.
+                </p>
+              </article>
+              <article class="service-card reveal">
+                <div class="service-card__icon">02</div>
+                <h3 data-i18n="srv_2_title">Custom &amp; OEM Manufacturing</h3>
+                <p data-i18n="srv_2_desc">
+                  Our project-by-project development flows directly into custom manufacturing with tailored tooling, greater control, and dedicated production capacity.
+                </p>
+              </article>
+              <article class="service-card reveal">
+                <div class="service-card__icon">03</div>
+                <h3 data-i18n="srv_3_title">Brand &amp; Packaging Creation</h3>
+                <p data-i18n="srv_3_desc">
+                  Our creative team drives brand recognition through custom logos, laser engraving, kraft labels, inner/outer retail boxes, and export master cartons.
+                </p>
+              </article>
+              <article class="service-card reveal">
+                <div class="service-card__icon">04</div>
+                <h3 data-i18n="srv_4_title">Flexible Logistics Programming</h3>
+                <p data-i18n="srv_4_desc">
+                  Private brand programs aligned seamlessly with your retail operations — direct import, warehouse inventory, sea or air freight, or hybrid models.
+                </p>
+              </article>
+              <article class="service-card reveal">
+                <div class="service-card__icon">05</div>
+                <h3 data-i18n="srv_5_title">Sustainable Alternatives</h3>
+                <p data-i18n="srv_5_desc">
+                  Implementation-ready eco solutions including plant-based natural fibers, FSC wood, post-consumer resins, and recyclable plastic-free packaging.
+                </p>
+              </article>
+              <article class="service-card reveal">
+                <div class="service-card__icon">06</div>
+                <h3 data-i18n="srv_6_title">Holistic Category Management</h3>
+                <p data-i18n="srv_6_desc">
+                  Dedicated account management supporting your product line and category health with inventory planning, relevant market insights, and ongoing sales support.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7B. ABOUT PETLOXTUS (JOURNEY, MISSION & COMMITMENTS) -->
+        <section id="about" class="section section--sand">
+          <div class="container">
+            <div class="text-center reveal">
+              <span class="eyebrow" data-i18n="about_eyebrow">About Petloxtus</span>
+              <h2 class="section-title" data-i18n="about_title">
+                From Household Roots to a Global Pet Product Export Partner
+              </h2>
+              <p class="section-subtitle" style="margin: 0 auto;" data-i18n="about_sub">
+                PETLOXTUS has emerged as a leading player in the pet product industry — evolving from modest household beginnings into a trusted global exporter serving Europe, North America, Asia, and Australia.
+              </p>
+            </div>
+
+            <div class="about-journey-grid reveal">
+              <article class="about-milestone">
+                <span class="about-milestone__tag" data-i18n="about_m1_tag">Stage 01 • Household Origins</span>
+                <h3 data-i18n="about_m1_title">Humble Natural-Material Vision</h3>
+                <p data-i18n="about_m1_desc">
+                  Started on a household scale driven by a vision to craft safe, functional, eco-friendly pet products using Vietnam's abundant natural materials.
+                </p>
+              </article>
+              <article class="about-milestone">
+                <span class="about-milestone__tag" data-i18n="about_m2_tag">Stage 02 • Domestic Mastery</span>
+                <h3 data-i18n="about_m2_title">Domestic Market Penetration</h3>
+                <p data-i18n="about_m2_desc">
+                  Refined wooden accessories and cozy pet beds through direct customer feedback, streamlining our 2,000 m² production processes for consistent quality.
+                </p>
+              </article>
+              <article class="about-milestone">
+                <span class="about-milestone__tag" data-i18n="about_m3_tag">Stage 03 • 2024 Global Expansion</span>
+                <h3 data-i18n="about_m3_title">Worldwide Export Enterprise</h3>
+                <p data-i18n="about_m3_desc">
+                  Expanded internationally in 2024 across cat trees, metal cages, silicone feeders, E-TPU chew toys, and pet apparel — trusted across four continents.
+                </p>
+              </article>
+            </div>
+
+            <div class="about-pillars-split reveal">
+              <div class="about-pillar-box about-pillar-box--mission">
+                <h3 data-i18n="about_mission_title">Our Mission &amp; Environmental Promise</h3>
+                <p data-i18n="about_mission_desc">
+                  To design and manufacture pet products that combine superior quality, safety, sustainability, and factory-direct affordability. All items are crafted from non-toxic, eco-friendly materials with waste-reduced processes and recyclable packaging.
+                </p>
+              </div>
+              <div class="about-pillar-box about-pillar-box--why">
+                <h3 data-i18n="about_why_title">Our Commitments &amp; NDA Confidentiality</h3>
+                <ul class="about-why-list">
+                  <li><span>✦</span> <span data-i18n="about_w1">To Customers: Reliable quality, 24-hour response, and long-term partnership</span></li>
+                  <li><span>✦</span> <span data-i18n="about_w2">To the Community: Local economic growth and eco-friendly manufacturing initiatives</span></li>
+                  <li><span>✦</span> <span data-i18n="about_w3">To Employees: A safe, ethical, growth-oriented workplace for skilled artisans</span></li>
+                  <li><span>✦</span> <span data-i18n="about_w4">Strict Confidentiality: Ready to sign NDAs protecting every OEM/ODM design &amp; IP</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. QUALITY ASSURANCE, CERTIFICATIONS & SAMPLE CTA -->
+        <section id="quality" class="section section--dark">
+          <div class="container">
+            <div class="text-center reveal">
+              <span class="eyebrow eyebrow--light" data-i18n="qual_eyebrow">Global Export Compliance</span>
+              <h2 class="section-title section-title--light" data-i18n="qual_title">
+                Audited &amp; Certified for International Retail Chains
+              </h2>
+              <p class="section-subtitle section-subtitle--light" data-i18n="qual_sub">
+                Our factory and partner supply network meet the stringent social, quality, environmental, and security audits required by leading global retailers.
+              </p>
+            </div>
+
+            <div class="cert-grid">
+              <div class="cert-card reveal">
+                <div class="cert-card__badge">BSCI</div>
+                <h3 data-i18n="cert_1_title">BSCI &amp; Sedex</h3>
+                <p data-i18n="cert_1_desc">
+                  Verified ethical labor, safe working conditions, and transparent social compliance across manufacturing.
+                </p>
+              </div>
+              <div class="cert-card reveal">
+                <div class="cert-card__badge">FCCA</div>
+                <h3 data-i18n="cert_2_title">Walmart FCCA &amp; SCS</h3>
+                <p data-i18n="cert_2_desc">
+                  Factory Capability &amp; Capacity Audit (FCCA) and Supply Chain Security (SCS) standards verified by Walmart.
+                </p>
+              </div>
+              <div class="cert-card reveal">
+                <div class="cert-card__badge">FSC</div>
+                <h3 data-i18n="cert_3_title">FSC &amp; ISO 9001</h3>
+                <p data-i18n="cert_3_desc">
+                  Responsibly sourced natural timber certified by FSC paired with ISO 9001 quality management systems.
+                </p>
+              </div>
+              <div class="cert-card reveal">
+                <div class="cert-card__badge">GSV</div>
+                <h3 data-i18n="cert_4_title">IEPT, CVS &amp; GSV</h3>
+                <p data-i18n="cert_4_desc">
+                  Global Security Verification (GSV), IEPT, and CVS compliance ensuring smooth customs clearance worldwide.
+                </p>
+              </div>
+            </div>
+
+            <div class="partner-cta-banner reveal">
+              <div>
+                <h3 data-i18n="partner_cta_title">Ready to Elevate Your Pet Product Brand?</h3>
+                <p data-i18n="partner_cta_desc">
+                  Send us your product specs, artwork, or target category. Receive factory-direct quotations within 72 hours and custom approval samples in 7–10 days.
+                </p>
+              </div>
+              <button
+                type="button"
+                class="btn btn--brand js-open-quote"
+                data-product="Custom OEM / ODM Project & NDA"
+                data-i18n="partner_cta_btn"
+              >
+                Request Custom Quote &amp; Samples
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. 6-STEP PRODUCTION PROCESS OF PETLOXTUS -->
+        <section id="process" class="section section--cream">
+          <div class="container">
+            <div class="text-center reveal">
+              <span class="eyebrow" data-i18n="proc_eyebrow">One-Stop Workflow</span>
+              <h2 class="section-title" data-i18n="proc_title">Production Process of Petloxtus</h2>
+              <p class="section-subtitle" data-i18n="proc_sub">
+                From your initial inquiry and custom artwork to full-step factory QC and global container shipping in 6 transparent stages.
+              </p>
+            </div>
+
+            <div class="steps-grid">
+              <div class="step-card reveal">
+                <div class="step-card__num">01</div>
+                <h3 data-i18n="step_1_title">Send Pet Product Details</h3>
+                <p data-i18n="step_1_desc">
+                  Share your detailed requirements — beds, wood, cat trees, toys, clothing, or accessories — including size, quantity, material, and design artwork.
+                </p>
+              </div>
+              <div class="step-card reveal">
+                <div class="step-card__num">02</div>
+                <h3 data-i18n="step_2_title">Make An Offer (Within 72h)</h3>
+                <p data-i18n="step_2_desc">
+                  We provide transparent quotations within 72 hours after receiving your project details, covering both in-house and Vietnam-sourced products.
+                </p>
+              </div>
+              <div class="step-card reveal">
+                <div class="step-card__num">03</div>
+                <h3 data-i18n="step_3_title">Arrange Samples (7–10 Days)</h3>
+                <p data-i18n="step_3_desc">
+                  We produce your custom pet product samples and follow up with our sourcing team for your physical approval within 7–10 days.
+                </p>
+              </div>
+              <div class="step-card reveal">
+                <div class="step-card__num">04</div>
+                <h3 data-i18n="step_4_title">Bulk Production (30–45 Days)</h3>
+                <p data-i18n="step_4_desc">
+                  Mass production begins upon sample sign-off, typically taking 30–45 business days with proactive progress updates throughout.
+                </p>
+              </div>
+              <div class="step-card reveal">
+                <div class="step-card__num">05</div>
+                <h3 data-i18n="step_5_title">Full-Step Quality Inspection</h3>
+                <p data-i18n="step_5_desc">
+                  Every pet product undergoes strict in-factory QC inspection against your specifications to guarantee 95%–98% sample similarity.
+                </p>
+              </div>
+              <div class="step-card reveal">
+                <div class="step-card__num">06</div>
+                <h3 data-i18n="step_6_title">Load &amp; Ship Worldwide</h3>
+                <p data-i18n="step_6_desc">
+                  Upon balance confirmation, we arrange reliable Sea or Air freight with competitive quotes from multiple forwarders upon request.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10. GLOBAL PARTNER TESTIMONIALS -->
+        <section class="section section--sand">
+          <div class="container">
+            <div class="text-center reveal">
+              <span class="eyebrow" data-i18n="testi_eyebrow">Global Export Markets</span>
+              <h2 class="section-title" data-i18n="testi_title">Trusted by Pet Brands Across Four Continents</h2>
+            </div>
+            <div class="testimonials-grid">
+              <article class="testimonial-card reveal">
+                <div>
+                  <div class="testimonial-card__stars">★★★★★</div>
+                  <blockquote data-i18n="testi_1_quote">
+                    "Petloxtus helped us diversify our wooden cat tree and water hyacinth bed line into Vietnam. Sample similarity hit 98% and FSC documentation cleared EU customs effortlessly."
+                  </blockquote>
+                </div>
+                <div class="testimonial-card__author">
+                  <strong>Lukas Weber</strong>
+                  <span data-i18n="testi_1_role">VP of Product Sourcing • Pet Retail Chain, Germany</span>
+                </div>
+              </article>
+
+              <article class="testimonial-card reveal">
+                <div>
+                  <div class="testimonial-card__stars">★★★★★</div>
+                  <blockquote data-i18n="testi_2_quote">
+                    "Starting with a 1,000 PCS MOQ and custom kraft retail boxes allowed us to launch our private-label silicone and E-TPU chew toy line with minimal risk."
+                  </blockquote>
+                </div>
+                <div class="testimonial-card__author">
+                  <strong>Hannah Miller</strong>
+                  <span data-i18n="testi_2_role">Founder &amp; Buyer • Modern Pet Brand, California, USA</span>
+                </div>
+              </article>
+
+              <article class="testimonial-card reveal">
+                <div>
+                  <div class="testimonial-card__stars">★★★★★</div>
+                  <blockquote data-i18n="testi_3_quote">
+                    "Their English-fluent project team replies within hours, signed our NDA immediately, and consolidated beds, apparel, and metal cages into one smooth shipment to Sydney."
+                  </blockquote>
+                </div>
+                <div class="testimonial-card__author">
+                  <strong>Daniel Cooper</strong>
+                  <span data-i18n="testi_3_role">Import Director • Pet Wholesale Distributor, Australia</span>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- 11. FAQ ACCORDION (ALL 10 AUTHENTIC FAQS FROM PETLOXTUS.COM) -->
+        <section id="faq" class="section section--cream">
+          <div class="container">
+            <div class="text-center reveal">
+              <span class="eyebrow" data-i18n="faq_eyebrow">Frequently Asked Questions</span>
+              <h2 class="section-title" data-i18n="faq_title">Everything Global Pet Buyers Ask</h2>
+            </div>
+
+            <div class="faq-list reveal">
+              {faqs.map((item) => (
+                <div class="faq-item">
+                  <button type="button" class="faq-question">
+                    <em style="font-style:normal;" data-i18n={item.qKey}>{item.q}</em>
+                    <span>+</span>
+                  </button>
+                  <div class="faq-answer">
+                    <p data-i18n={item.aKey}>{item.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter showResetGate={true} />
+    </div>
+
+    <QuoteModal />
+
+    <script src="/i18n.js?v=20261124" is:inline></script>
+    <script src="/script.js?v=20261124" is:inline></script>
+  </body>
+</html>

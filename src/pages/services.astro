@@ -1,0 +1,169 @@
+---
+import HeadMeta from "../components/HeadMeta.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import QuoteModal from "../components/QuoteModal.astro";
+import { resolveWebhookUrl } from "../data/catalog";
+
+const webhookUrl = resolveWebhookUrl(Astro.locals);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <HeadMeta
+      title="OEM & ODM Services — Petloxtus Vietnam Pet Product Manufacturer | petloxtus.com"
+      description="PETLOXTUS provides end-to-end OEM & ODM pet product solutions: Tailored Product Development, Custom Manufacturing, Brand & Packaging Creation, Flexible Logistics, Sustainable Alternatives, and Holistic Category Management."
+    />
+  </head>
+  <body data-webhook-url={webhookUrl}>
+    <SiteHeader active="services" quoteProduct="Custom OEM / ODM Project & NDA" />
+
+    <main>
+      <section class="products-hero">
+        <div class="container products-hero__inner">
+          <div>
+            <span class="eyebrow eyebrow--light" data-i18n="services_eyebrow">
+              End-to-End OEM &amp; ODM Services
+            </span>
+            <h1 class="section-title section-title--light" style="margin-bottom: 12px;" data-i18n="services_title">
+              From Initial Concept to Global Retail Shelves
+            </h1>
+            <p class="section-subtitle section-subtitle--light" data-i18n="services_sub">
+              PETLOXTUS provides a complete, end-to-end solution — from design and manufacturing to program management — tailored to meet each retailer's unique needs. Our streamlined approach ensures reliable quality and on-time supply, every time.
+            </p>
+          </div>
+          <button
+            type="button"
+            class="btn btn--brand js-open-quote"
+            data-product="Custom OEM / ODM Project & NDA"
+            data-i18n="partner_cta_btn"
+          >
+            Request Custom Quote &amp; Samples
+          </button>
+        </div>
+      </section>
+
+      <section class="section section--cream">
+        <div class="container">
+          <div class="services-grid" style="margin-top: 0;">
+            <article class="service-card">
+              <div class="service-card__icon">01</div>
+              <h3 data-i18n="srv_1_title">Tailored Product Development</h3>
+              <p data-i18n="srv_1_desc">
+                Our teams are empowered to collaborate on the development of exclusive products tailored to your brand's needs. Whether refreshing existing product lines or creating new-to-market concepts, PETLOXTUS can be your partner of choice.
+              </p>
+            </article>
+            <article class="service-card">
+              <div class="service-card__icon">02</div>
+              <h3 data-i18n="srv_2_title">Custom &amp; OEM Manufacturing</h3>
+              <p data-i18n="srv_2_desc">
+                Our project-by-project development approach flows directly into the custom manufacturing process. This results in tailored tooling, greater control, and dedicated production capacity for your specific program.
+              </p>
+            </article>
+            <article class="service-card">
+              <div class="service-card__icon">03</div>
+              <h3 data-i18n="srv_3_title">Brand &amp; Packaging Creation</h3>
+              <p data-i18n="srv_3_desc">
+                Our in-house creative team helps you stand out and drive brand recognition through custom logos, laser engraving, artwork, kraft &amp; tag labels, inner/outer retail boxes, and export master cartons.
+              </p>
+            </article>
+            <article class="service-card">
+              <div class="service-card__icon">04</div>
+              <h3 data-i18n="srv_4_title">Flexible Logistics Programming</h3>
+              <p data-i18n="srv_4_desc">
+                We are committed to executing private brand programs that align seamlessly with your retail operations — whether through direct import, warehouse inventory, sea/air freight, or any hybrid model in between.
+              </p>
+            </article>
+            <article class="service-card">
+              <div class="service-card__icon">05</div>
+              <h3 data-i18n="srv_5_title">Sustainable Alternatives</h3>
+              <p data-i18n="srv_5_desc">
+                We understand the importance of sustainable solutions that create real impact for a retailer's products and packaging — including plant-based materials, FSC wood, post-consumer resins, and plastic-free packaging.
+              </p>
+            </article>
+            <article class="service-card">
+              <div class="service-card__icon">06</div>
+              <h3 data-i18n="srv_6_title">Holistic Category Management</h3>
+              <p data-i18n="srv_6_desc">
+                Our Account Management team is dedicated to supporting the product, the category, and the retailer by managing inventory, delivering relevant insights, and driving overall sales performance.
+              </p>
+            </article>
+          </div>
+
+          <div class="people-grid">
+            <article class="story-photo-card">
+              <img src="/assets/oem-packaging.webp" alt="Custom OEM Packaging & Eco Materials" loading="lazy" />
+              <div class="story-photo-card__content">
+                <span>Custom Branding &amp; Packaging</span>
+                <h3>Logo Engraving, Tag Labels &amp; Retail Cartons</h3>
+                <p>
+                  Full customization across Pet Beds, E-TPU Chew Toys, Cat Trees, Metal Cages, Silicone Products, Natural Wood, Reed &amp; Water Hyacinth, and Pet Apparel.
+                </p>
+              </div>
+            </article>
+
+            <article class="story-photo-card">
+              <img src="/assets/qc-inspection.webp" alt="Petloxtus Factory Quality Control" loading="lazy" />
+              <div class="story-photo-card__content">
+                <span>NDA &amp; Strict Quality Assurance</span>
+                <h3>95%–98% Sample Similarity &amp; IP Protection</h3>
+                <p>
+                  We safeguard your exclusive designs with signed Non-Disclosure Agreements (NDAs) and enforce full-step QC from raw materials through final shipment loading.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--sand">
+        <div class="container">
+          <div class="text-center">
+            <span class="eyebrow" data-i18n="proc_eyebrow">One-Stop Workflow</span>
+            <h2 class="section-title" data-i18n="proc_title">Production Process of Petloxtus</h2>
+          </div>
+
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-card__num">01</div>
+              <h3 data-i18n="step_1_title">Send Pet Product Details</h3>
+              <p data-i18n="step_1_desc">Share size, quantity, material, design artwork, and target market requirements.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">02</div>
+              <h3 data-i18n="step_2_title">Make An Offer (Within 72h)</h3>
+              <p data-i18n="step_2_desc">Receive factory-direct and Vietnam-sourced quotations within 72 hours.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">03</div>
+              <h3 data-i18n="step_3_title">Arrange Samples (7–10 Days)</h3>
+              <p data-i18n="step_3_desc">Physical samples produced and verified by our team within 7–10 days.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">04</div>
+              <h3 data-i18n="step_4_title">Bulk Production (30–45 Days)</h3>
+              <p data-i18n="step_4_desc">Dedicated production scheduling with transparent progress updates.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">05</div>
+              <h3 data-i18n="step_5_title">Full-Step Quality Inspection</h3>
+              <p data-i18n="step_5_desc">100% factory QC inspection matching your exact specifications.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-card__num">06</div>
+              <h3 data-i18n="step_6_title">Load &amp; Ship Worldwide</h3>
+              <p data-i18n="step_6_desc">Competitive Sea &amp; Air freight forwarding to Europe, North America, Asia &amp; Australia.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter quoteProduct="Custom OEM / ODM Project & NDA" />
+    <QuoteModal defaultProduct="Custom OEM / ODM Project & NDA" />
+
+    <script src="/i18n.js?v=20261124" is:inline></script>
+    <script src="/script.js?v=20261124" is:inline></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+---
+interface Props {
+  defaultProduct?: string;
+}
+
+const { defaultProduct = "Full B2B Factory Catalog & Price Sheet" } = Astro.props;
+---
+
+<div id="quote-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-dialog">
+    <button type="button" class="modal-close js-close-quote" aria-label="Close modal">&times;</button>
+    <span class="eyebrow" data-i18n="modal_eyebrow">Direct Vietnam Factory Desk</span>
+    <h3 id="modal-title" data-i18n="modal_title">Get Advice &amp; the Latest B2B Quotes</h3>
+    <p data-i18n="modal_desc">
+      Share your target product, order quantity, material or OEM packaging specs. We reply within 24 hours and send complete quotations within 72 hours.
+    </p>
+    <form id="quote-form" class="form-grid">
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="quote-company"><span data-i18n="lbl_company">Company Name</span> <span>*</span></label>
+          <input type="text" id="quote-company" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="quote-email"><span data-i18n="lbl_email">Business Email</span> <span>*</span></label>
+          <input type="email" id="quote-email" class="form-control" required />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="quote-phone"><span data-i18n="lbl_phone">Phone / WhatsApp</span> <span>*</span></label>
+          <input type="tel" id="quote-phone" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="quote-port" data-i18n="lbl_port">Destination Country / Port</label>
+          <input
+            type="text"
+            id="quote-port"
+            class="form-control"
+            data-i18n-placeholder="ph_port"
+            placeholder="e.g. USA, Germany, Australia, Japan"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="quote-product" data-i18n="lbl_product">Product / Category</label>
+          <select id="quote-product" class="form-control">
+            <option value="Full B2B Factory Catalog & Price Sheet" selected={defaultProduct === "Full B2B Factory Catalog & Price Sheet"} data-i18n="opt_full_quote">
+              Full B2B Factory Catalog &amp; Price Sheet
+            </option>
+            <option value="Wood Pet Accessories">Wood Pet Accessories</option>
+            <option value="Cat Trees & Towers">Cat Trees &amp; Towers</option>
+            <option value="Pet Beds & Sofas">Pet Beds &amp; Sofas</option>
+            <option value="Pet Clothing & Apparel">Pet Clothing &amp; Apparel</option>
+            <option value="Metal Cages & Crates">Metal Cages &amp; Crates</option>
+            <option value="Silicone Feeders & Mats">Silicone Feeders &amp; Mats</option>
+            <option value="E-TPU & Chew Toys">E-TPU &amp; Chew Toys</option>
+            <option value="Reed & Water Hyacinth">Reed &amp; Water Hyacinth</option>
+            <option value="Plastic Pet Essentials">Plastic Pet Essentials</option>
+            <option value="Custom OEM / ODM Project & NDA" data-i18n="opt_oem_custom">
+              Custom OEM / ODM Project &amp; NDA
+            </option>
+            <option value="Custom Sample Kit (7–10 Days)" data-i18n="opt_samples">
+              Custom Sample Kit (7–10 Days)
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="quote-volume" data-i18n="lbl_volume">Estimated Order Quantity</label>
+          <select id="quote-volume" class="form-control">
+            <option value="Custom Sample Request (7–10 Days)" data-i18n="vol_1">Custom Sample Request (7–10 Days)</option>
+            <option value="Low MOQ Trial (500 – 1,000 PCS)" data-i18n="vol_2">Low MOQ Trial (500 – 1,000 PCS)</option>
+            <option value="Wholesale Order (1,000 – 5,000 PCS)" data-i18n="vol_3">Wholesale Order (1,000 – 5,000 PCS)</option>
+            <option value="Full Container (20ft / 40ft FCL)" data-i18n="vol_4">Full Container (20ft / 40ft FCL)</option>
+            <option value="Ongoing OEM / Private Label Program" data-i18n="vol_5">Ongoing OEM / Private Label Program</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="quote-notes" data-i18n="lbl_notes">Custom Specs (Size, Material, Artwork, Packaging, NDA)</label>
+        <textarea
+          id="quote-notes"
+          rows="3"
+          class="form-control"
+          data-i18n-placeholder="ph_notes"
+          placeholder="Tell us dimensions, wood/fabric/silicone material, custom logo engraving, kraft labels, or target shipping date..."
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn--brand btn--full" data-i18n="modal_submit">
+        Send Quotation Request
+      </button>
+      <div id="quote-status" class="form-status" aria-live="polite"></div>
+    </form>
+  </div>
+</div>

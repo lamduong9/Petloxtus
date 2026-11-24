@@ -1,0 +1,115 @@
+---
+interface Props {
+  active?: "home" | "products" | "services" | "journal" | "other";
+  showAnnouncement?: boolean;
+  quoteProduct?: string;
+}
+
+const {
+  active = "home",
+  showAnnouncement = true,
+  quoteProduct = "Full B2B Factory Catalog & Price Sheet",
+} = Astro.props;
+
+const isHome = active === "home";
+const anchor = (hash: string) => (isHome ? hash : `/${hash}`);
+---
+
+{showAnnouncement && (
+  <div class="announcement-bar" data-i18n="announcement">
+    One-Stop Vietnam Custom Pet Product Manufacturer &amp; Sourcing • Low MOQ (1,000 PCS) • BSCI, FSC, Sedex, ISO9001 &amp; Walmart Certified
+  </div>
+)}
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={isHome ? "#top" : "/"} class="brand-mark" aria-label="Petloxtus Home">
+      <img src="/assets/logo.png" alt="PETLOXTUS Official Logo" />
+    </a>
+
+    <nav aria-label="Primary Navigation">
+      <ul class="nav-links">
+        <li>
+          <a href="/products" class={active === "products" ? "is-active" : undefined} data-i18n="nav_products">
+            Products
+          </a>
+        </li>
+        <li>
+          <a href="/services" class={active === "services" ? "is-active" : undefined} data-i18n="nav_services">
+            Services
+          </a>
+        </li>
+        <li>
+          <a href={anchor("#why-us")} data-i18n="nav_why">Why Petloxtus</a>
+        </li>
+        <li>
+          <a href={anchor("#quality")} data-i18n="nav_quality">Certifications</a>
+        </li>
+        <li>
+          <a href={anchor("#process")} data-i18n="nav_process">Process</a>
+        </li>
+        <li>
+          <a href="/posts" class={active === "journal" ? "is-active" : undefined} data-i18n="nav_journal">
+            Journal
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <select aria-label="Website Language" class="lang-select js-lang-switcher">
+        <option value="en">🇬🇧 EN</option>
+        <option value="vi">🇻🇳 VI</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="de">🇩🇪 DE</option>
+        <option value="fr">🇫🇷 FR</option>
+      </select>
+
+      <button
+        type="button"
+        class="btn btn--brand btn--sm js-open-quote"
+        data-product={quoteProduct}
+        data-i18n="btn_quote"
+      >
+        Request a Quote
+      </button>
+
+      <button
+        type="button"
+        id="mobile-menu-btn"
+        class="mobile-menu-btn"
+        aria-label="Toggle Menu"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-drawer" class="mobile-drawer">
+    <ul>
+      <li><a href="/" data-i18n="nav_home">Home</a></li>
+      <li><a href="/products" data-i18n="nav_products">Products</a></li>
+      <li><a href="/services" data-i18n="nav_services">Services</a></li>
+      <li><a href={anchor("#why-us")} data-i18n="nav_why">Why Petloxtus</a></li>
+      <li><a href={anchor("#about")} data-i18n="nav_about">About Us</a></li>
+      <li><a href={anchor("#quality")} data-i18n="nav_quality">Certifications</a></li>
+      <li><a href={anchor("#process")} data-i18n="nav_process">Process</a></li>
+      <li><a href={anchor("#faq")} data-i18n="nav_faq">FAQs</a></li>
+      <li><a href="/posts" data-i18n="nav_journal">Journal</a></li>
+    </ul>
+    <button
+      type="button"
+      class="btn btn--brand btn--full js-open-quote"
+      data-product={quoteProduct}
+      data-i18n="btn_quote"
+    >
+      Request a Quote
+    </button>
+  </div>
+</header>

@@ -1,0 +1,263 @@
+---
+import HeadMeta from "../../components/HeadMeta.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import QuoteModal from "../../components/QuoteModal.astro";
+import { loadAllProducts, getCategoryCounts, resolveWebhookUrl } from "../../data/catalog";
+
+const { products, cacheHint } = await loadAllProducts();
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+
+const categoryCounts = getCategoryCounts(products);
+const initialCategory = Astro.url.searchParams.get("category") || "all";
+const webhookUrl = resolveWebhookUrl(Astro.locals);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <HeadMeta
+      title="Products — Petloxtus Vietnam Pet Product Manufacturer | petloxtus.com"
+      description="Explore Petloxtus's complete B2B catalog of 71+ custom pet products manufactured in Vietnam: Wood, Cat Trees, Pet Beds, Clothing, Metal Cages, Silicone, E-TPU Toys, Reed & Water Hyacinth, and Plastic essentials."
+    />
+  </head>
+  <body data-webhook-url={webhookUrl}>
+    <SiteHeader active="products" />
+
+    <main>
+      <section class="products-hero">
+        <div class="container products-hero__inner">
+          <div>
+            <span class="eyebrow eyebrow--light" data-i18n="catalog_eyebrow">
+              B2B Manufacturing Portfolio
+            </span>
+            <h1 class="section-title section-title--light" style="margin-bottom: 12px;" data-i18n="nav_products">
+              Products
+            </h1>
+            <p class="section-subtitle section-subtitle--light" data-i18n="catalog_sub">
+              Every product is available for custom sizing, color, material, and private-label packaging. No fixed retail pricing — request a tailored factory-direct FOB/CIF quotation directly.
+            </p>
+          </div>
+          <button
+            type="button"
+            class="btn btn--brand js-open-quote"
+            data-product="Full B2B Factory Catalog & Price Sheet"
+            data-i18n="catalog_btn_all"
+          >
+            Get Full B2B Price Sheet
+          </button>
+        </div>
+      </section>
+
+      <section class="section section--sand">
+        <div class="container">
+          <!-- Search & Count Toolbar -->
+          <div class="catalog-toolbar">
+            <div class="catalog-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="search"
+                id="catalog-search-input"
+                data-i18n-placeholder="search_placeholder"
+                placeholder="Search pet beds, wood, cat trees, cages, silicone, toys..."
+                aria-label="Search products"
+              />
+            </div>
+            <div class="catalog-count" id="catalog-count">
+              Showing {products.length} of {products.length} products
+            </div>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="filter-bar" role="tablist" aria-label="Filter pet products by category">
+            <button
+              type="button"
+              class={`filter-pill ${initialCategory === "all" ? "is-active" : ""}`}
+              data-filter="all"
+            >
+              <span data-i18n="filter_all">All Products</span> ({products.length})
+            </button>
+            {categoryCounts.map((cat) => (
+              <button
+                type="button"
+                class={`filter-pill ${initialCategory.toLowerCase() === cat.name.toLowerCase() ? "is-active" : ""}`}
+                data-filter={cat.name}
+              >
+                {cat.name} ({cat.count})
+              </button>
+            ))}
+          </div>
+
+          <!-- Dynamic CMS Product Grid -->
+          <div class="product-grid product-grid--3" id="products-grid">
+            {products.map((prod) => (
+              <article
+                class="product-card"
+                data-category={prod.category}
+                data-search={`${prod.title} ${prod.category} ${prod.shortDescription} ${prod.specs.join(" ")}`.toLowerCase()}
+              >
+                <div class="product-card__media">
+                  <a href={`/products/${prod.slug}`}>
+                    <img src={prod.primaryImage} alt={prod.title} loading="lazy" />
+                  </a>
+                  <span class="product-card__tag">{prod.category}</span>
+                </div>
+                <div class="product-card__body">
+                  <h3>
+                    <a href={`/products/${prod.slug}`}>{prod.title}</a>
+                  </h3>
+                  <p class="product-card__desc">{prod.shortDescription}</p>
+                  <div class="spec-chips">
+                    {prod.specs.slice(0, 3).map((chip) => (
+                      <span class="spec-chip">{chip}</span>
+                    ))}
+                  </div>
+                  <div class="product-card__footer">
+                    <span class="moq-note">{prod.moq}</span>
+                    <div class="product-card__actions">
+                      <a href={`/products/${prod.slug}`} class="spec-link" data-i18n="btn_details">
+                        Details
+                      </a>
+                      <button
+                        type="button"
+                        class="btn btn--brand btn--sm js-open-quote"
+                        data-product={prod.title}
+                        data-i18n="btn_req_quote"
+                      >
+                        Request Quote
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <!-- 4 Signature Material Pillars -->
+          <div class="craft-band">
+            <div class="craft-band__head">
+              <div>
+                <span class="eyebrow eyebrow--light" data-i18n="craft_eyebrow">
+                  Signature Materials &amp; Capabilities
+                </span>
+                <h2
+                  class="section-title section-title--light"
+                  style="font-size: clamp(1.75rem, 3vw, 2.4rem); margin-bottom: 4px;"
+                  data-i18n="craft_title"
+                >
+                  Four Material Pillars of Petloxtus Manufacturing
+                </h2>
+              </div>
+              <button
+                type="button"
+                class="btn btn--outline-light btn--sm js-open-quote"
+                data-product="Custom Sample Kit (7–10 Days)"
+                data-i18n="craft_btn"
+              >
+                Request Custom Samples (7–10 Days)
+              </button>
+            </div>
+            <div class="craft-grid">
+              <div class="craft-tile craft-tile--terracotta">
+                <div class="craft-tile__num">01</div>
+                <h4 data-i18n="craft_1_title">Natural Wood &amp; Cat Trees</h4>
+                <p data-i18n="craft_1_desc">
+                  FSC-certified solid wood cat towers, scratching posts, hideaways, elevated feeders, and pet houses crafted with smooth, pet-safe finishes.
+                </p>
+              </div>
+              <div class="craft-tile craft-tile--walnut">
+                <div class="craft-tile__num">02</div>
+                <h4 data-i18n="craft_2_title">Plush Beds &amp; Pet Apparel</h4>
+                <p data-i18n="craft_2_desc">
+                  Calming fluffy dog beds, raised wooden-leg cat sofas, washable mats, winter sweaters, fleece coats, and post-surgery recovery suits.
+                </p>
+              </div>
+              <div class="craft-tile craft-tile--sage">
+                <div class="craft-tile__num">03</div>
+                <h4 data-i18n="craft_3_title">Reed &amp; Water Hyacinth</h4>
+                <p data-i18n="craft_3_desc">
+                  Hand-woven Vietnamese natural water hyacinth and reed pet baskets, condos, and loofah mats — breathable, artisanal, and biodegradable.
+                </p>
+              </div>
+              <div class="craft-tile craft-tile--slate">
+                <div class="craft-tile__num">04</div>
+                <h4 data-i18n="craft_4_title">Silicone, E-TPU Toys &amp; Metal Cages</h4>
+                <p data-i18n="craft_4_desc">
+                  Non-toxic food-grade silicone bowls &amp; mats, ultra-elastic E-TPU chew toys, durable ABS litter boxes, and foldable rust-resistant metal cages.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter mobileLeftHref="/" mobileLeftLabelKey="nav_home" mobileLeftFallback="Home" />
+    <QuoteModal />
+
+    <script src="/i18n.js?v=20261124" is:inline></script>
+    <script src="/script.js?v=20261124" is:inline></script>
+    <script is:inline>
+      (function () {
+        let activeFilter = new URLSearchParams(window.location.search).get("category") || "all";
+        const searchInput = document.getElementById("catalog-search-input");
+        const countEl = document.getElementById("catalog-count");
+        const cards = Array.from(document.querySelectorAll("#products-grid .product-card"));
+        const pills = Array.from(document.querySelectorAll(".filter-pill"));
+
+        function applyFilters() {
+          const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+          let visible = 0;
+
+          cards.forEach((card) => {
+            const cat = (card.getAttribute("data-category") || "").toLowerCase();
+            const text = card.getAttribute("data-search") || "";
+            const catMatch = activeFilter === "all" || cat === activeFilter.toLowerCase();
+            const qMatch = !query || text.includes(query);
+            const show = catMatch && qMatch;
+            card.style.display = show ? "" : "none";
+            if (show) visible++;
+          });
+
+          if (countEl) {
+            countEl.textContent = `Showing ${visible} of ${cards.length} products`;
+          }
+        }
+
+        pills.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            activeFilter = btn.getAttribute("data-filter") || "all";
+            pills.forEach((b) => b.classList.remove("is-active"));
+            btn.classList.add("is-active");
+            const url = new URL(window.location.href);
+            if (activeFilter === "all") url.searchParams.delete("category");
+            else url.searchParams.set("category", activeFilter);
+            window.history.replaceState({}, "", url.toString());
+            applyFilters();
+          });
+        });
+
+        if (searchInput) {
+          searchInput.addEventListener("input", applyFilters);
+        }
+
+        // Sync initial active pill & filter from URL query parameter
+        if (activeFilter !== "all") {
+          const matchingPill = pills.find(
+            (b) => (b.getAttribute("data-filter") || "").toLowerCase() === activeFilter.toLowerCase()
+          );
+          if (matchingPill) {
+            pills.forEach((b) => b.classList.remove("is-active"));
+            matchingPill.classList.add("is-active");
+          } else {
+            activeFilter = "all";
+          }
+        }
+        applyFilters();
+      })();
+    </script>
+  </body>
+</html>

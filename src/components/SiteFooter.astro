@@ -1,0 +1,169 @@
+---
+interface Props {
+  showResetGate?: boolean;
+  mobileLeftHref?: string;
+  mobileLeftLabelKey?: string;
+  mobileLeftFallback?: string;
+  quoteProduct?: string;
+}
+
+const {
+  showResetGate = false,
+  mobileLeftHref = "/products",
+  mobileLeftLabelKey = "nav_products",
+  mobileLeftFallback = "Products",
+  quoteProduct = "Full B2B Factory Catalog & Price Sheet",
+} = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo-pill" aria-label="Petloxtus Home">
+          <img src="/assets/logo.png" alt="PETLOXTUS Logo" />
+        </a>
+        <p data-i18n="footer_about">
+          One-stop Vietnam custom pet product manufacturer &amp; sourcing partner. 2,000 m² factory in Ninh Binh crafting pet beds, wooden furniture, cat trees, silicone feeders, metal cages, E-TPU toys &amp; apparel worldwide.
+        </p>
+        <div class="footer-socials" aria-label="Petloxtus Social & Contact">
+          <a
+            href="https://wa.me/84977654455"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-btn"
+            aria-label="WhatsApp"
+            title="WhatsApp (+84 977-654-455)"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12.03 2C6.5 2 2 6.48 2 12c0 1.98.58 3.83 1.58 5.39L2.2 22l4.75-1.25A10 10 0 0 0 12.03 22C17.56 22 22 17.52 22 12S17.56 2 12.03 2zm5.82 14.12c-.24.68-1.42 1.3-1.96 1.38-.5.08-1.14.11-1.84-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.3-5.06-4.5-.15-.2-1.21-1.61-1.21-3.07s.76-2.18 1.04-2.48c.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.24.59.84 2.04.91 2.19.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.05 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.67-.15.27.1 1.73.82 2.03.97.3.15.49.22.57.34.07.13.07.72-.17 1.4z"></path>
+            </svg>
+          </a>
+          <a
+            href="https://www.instagram.com/petloxtus/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-btn"
+            aria-label="Instagram"
+            title="Instagram"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+            </svg>
+          </a>
+          <a
+            href="https://x.com/petloxtus"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-btn"
+            aria-label="X (Twitter)"
+            title="X (Twitter)"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+            </svg>
+          </a>
+          <a
+            href="mailto:info@petloxtus.com"
+            class="social-btn"
+            aria-label="Email Petloxtus"
+            title="info@petloxtus.com"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_col_lines">Product Categories</h4>
+        <ul>
+          <li><a href="/products?category=Wood">Wood Pet Accessories</a></li>
+          <li><a href="/products?category=Cat+Tree">Cat Trees &amp; Towers</a></li>
+          <li><a href="/products?category=Bed">Pet Beds &amp; Sofas</a></li>
+          <li><a href="/products?category=Clothing">Pet Clothing &amp; Apparel</a></li>
+          <li><a href="/products?category=Metal+Cage">Metal Cages &amp; Crates</a></li>
+          <li><a href="/products?category=Silicone">Silicone Feeders &amp; Mats</a></li>
+          <li><a href="/products?category=Toys">E-TPU &amp; Chew Toys</a></li>
+          <li><a href="/products?category=Reed+And+Water+Hyacinth">Reed &amp; Water Hyacinth</a></li>
+          <li><a href="/products?category=Plastic">Plastic Pet Essentials</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_col_company">Support &amp; Policies</h4>
+        <ul>
+          <li><a href="/products" data-i18n="nav_products">Products</a></li>
+          <li><a href="/services" data-i18n="nav_services">OEM / ODM Services</a></li>
+          <li><a href="/#about" data-i18n="nav_about">About Us</a></li>
+          <li><a href="/#faq" data-i18n="nav_faq">FAQs</a></li>
+          <li><a href="/posts" data-i18n="footer_journal">Sourcing Journal (CMS)</a></li>
+          <li><a href="/privacy-policy" data-i18n="footer_privacy">Privacy Policy</a></li>
+          <li><a href="/terms-of-service" data-i18n="footer_terms">Terms of Service</a></li>
+          <li><a href="/_emdash/admin" data-i18n="footer_admin">CMS Admin</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_col_desk">Petloxtus Co., Ltd</h4>
+        <ul>
+          <li>Website: <strong>petloxtus.com</strong></li>
+          <li>Address: No. 10, Quy Nhat Town, Ninh Binh, Viet Nam</li>
+          <li>Tel: <a href="tel:+84977654455">(+84) 977-654-455</a></li>
+          <li>WhatsApp: <a href="https://wa.me/84977654455" target="_blank" rel="noopener noreferrer">(+84) 977-654-455</a></li>
+          <li>Email: <a href="mailto:info@petloxtus.com">info@petloxtus.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span data-i18n="footer_copy">&copy; 2026 PETLOXTUS LTD. All rights reserved.</span>
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <select aria-label="Footer Language" class="lang-select js-lang-switcher">
+          <option value="en">🇬🇧 English</option>
+          <option value="vi">🇻🇳 Tiếng Việt</option>
+          <option value="zh">🇨🇳 中文</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="ko">🇰🇷 한국어</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="fr">🇫🇷 Français</option>
+        </select>
+        {showResetGate && (
+          <button type="button" id="reset-gate-btn" class="reset-gate-btn" data-i18n="footer_reset_gate">
+            🔒 Preview Lead Gate
+          </button>
+        )}
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP CHAT (DESKTOP) -->
+<a
+  href="https://wa.me/84977654455?text=Hello%20Petloxtus%2C%20I%20would%20like%20to%20request%20a%20B2B%20pet%20product%20quotation."
+  target="_blank"
+  rel="noopener noreferrer"
+  class="whatsapp-float"
+  aria-label="Chat on WhatsApp"
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12.03 2C6.5 2 2 6.48 2 12c0 1.98.58 3.83 1.58 5.39L2.2 22l4.75-1.25A10 10 0 0 0 12.03 22C17.56 22 22 17.52 22 12S17.56 2 12.03 2zm5.82 14.12c-.24.68-1.42 1.3-1.96 1.38-.5.08-1.14.11-1.84-.12-.43-.14-.98-.32-1.69-.63-2.97-1.28-4.91-4.3-5.06-4.5-.15-.2-1.21-1.61-1.21-3.07s.76-2.18 1.04-2.48c.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.24.59.84 2.04.91 2.19.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.05 1.14 1.01 2.09 1.33 2.39 1.48.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.39-.25.67-.15.27.1 1.73.82 2.03.97.3.15.49.22.57.34.07.13.07.72-.17 1.4z"></path>
+  </svg>
+  <span>WhatsApp Desk</span>
+</a>
+
+<!-- MOBILE STICKY BOTTOM BAR (PHONES <= 768px) -->
+<div class="mobile-sticky-bar" role="region" aria-label="Quick Actions">
+  <a href={mobileLeftHref} class="btn btn--outline-light" data-i18n={mobileLeftLabelKey}>
+    {mobileLeftFallback}
+  </a>
+  <button
+    type="button"
+    class="btn btn--brand js-open-quote"
+    data-product={quoteProduct}
+    data-i18n="btn_quote"
+  >
+    Request a Quote
+  </button>
+</div>
