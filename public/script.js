@@ -119,10 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = decodeURIComponent(window.location.hash.slice(1));
     const target = document.getElementById(id);
     if (!target) return;
-    const header = document.querySelector(".site-header");
-    const offset = (header ? header.getBoundingClientRect().height : 84) + 16;
-    const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset);
-    window.scrollTo({ top, behavior: "auto" });
+    target.scrollIntoView({ behavior: "instant", block: "start" });
   }
 
   if (leadGate) {
@@ -136,7 +133,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.location.hash && window.location.hash.length > 1) {
     requestAnimationFrame(scrollToHashTarget);
     window.addEventListener("load", () => {
-      requestAnimationFrame(scrollToHashTarget);
+      scrollToHashTarget();
+      setTimeout(scrollToHashTarget, 120);
     });
   }
   window.addEventListener("hashchange", scrollToHashTarget);

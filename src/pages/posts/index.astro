@@ -59,25 +59,27 @@ const webhookUrl = resolveWebhookUrl(Astro.locals);
       <SiteHeader active="journal" />
 
       <main>
-        <section class="page-hero">
-          <div class="container">
-            <span class="eyebrow">Petloxtus Sourcing Journal</span>
-            <h1>Manufacturing &amp; Export Insights</h1>
-            <p>
-              Practical guides from our Vietnam factory and 20-member sourcing desk on FSC timber, natural fibers, OEM packaging, quality audits, and global retail compliance.
-            </p>
-            <div style="margin-top: 26px; display: flex; gap: 14px; flex-wrap: wrap;">
-              <button
-                type="button"
-                class="btn btn--brand js-open-quote"
-                data-product="Custom OEM / ODM Project & NDA"
-                data-i18n="btn_quote"
-              >
-                Request a Quote
-              </button>
-              <a href="/products" class="btn btn--outline-light">
-                Explore 71+ Products
-              </a>
+        <section class="products-hero">
+          <div class="container products-hero__inner">
+            <div>
+              <span class="eyebrow">Petloxtus Sourcing Journal</span>
+              <h1>Manufacturing &amp; Export Insights</h1>
+              <p>
+                Practical guides from our Vietnam factory and 20-member sourcing desk on FSC timber, natural fibers, OEM packaging, quality audits, and global retail compliance.
+              </p>
+              <div style="margin-top: 26px; display: flex; gap: 14px; flex-wrap: wrap;">
+                <button
+                  type="button"
+                  class="btn btn--brand js-open-quote"
+                  data-product="Custom OEM / ODM Project & NDA"
+                  data-i18n="btn_quote"
+                >
+                  Request a Quote
+                </button>
+                <a href="/products" class="btn btn--outline-light">
+                  Explore 71+ Products
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -157,6 +159,6 @@ const webhookUrl = resolveWebhookUrl(Astro.locals);
     <QuoteModal defaultProduct="Full B2B Factory Catalog & Price Sheet" />
 
     <script src="/i18n.js?v=20261124" is:inline></script>
-    <script src="/script.js?v=20261124c" is:inline></script>
+    <script src="/script.js?v=20261124d" is:inline></script>
   </body>
 </html>
