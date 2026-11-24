@@ -85,22 +85,9 @@ const faqs = [
       description="Petloxtus is a professional Vietnam pet product manufacturer & sourcing company with a 2,000 m² factory and 10+ years of experience crafting pet beds, wooden accessories, cat trees, silicone feeders, metal cages, E-TPU chew toys, and pet clothing."
     />
   </head>
-  <body class="gate-locked" data-webhook-url={webhookUrl}>
-    <script is:inline>
-      (function () {
-        try {
-          var unlocked = localStorage.getItem("petloxtus_gate_unlocked_v1") === "true";
-          var hasHash = window.location.hash && window.location.hash.length > 1;
-          var internalRef = document.referrer && document.referrer.indexOf(window.location.origin) === 0;
-          if (unlocked || hasHash || internalRef) {
-            document.body.classList.remove("gate-locked");
-            document.documentElement.classList.add("gate-pre-unlocked");
-          }
-        } catch (e) {}
-      })();
-    </script>
-    <!-- 0. B2B PARTNER ACCESS PORTAL (LEAD GATE OVERLAY) -->
-    <div id="lead-gate" class="lead-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <body data-webhook-url={webhookUrl}>
+    <!-- 0. B2B PARTNER ACCESS PORTAL (OPTIONAL — OPEN VIA FOOTER PREVIEW BUTTON) -->
+    <div id="lead-gate" class="lead-gate is-hidden" role="dialog" aria-modal="true" aria-labelledby="gate-title">
       <div class="lead-gate__card">
         <div class="lead-gate__visual">
           <img src="/assets/factory-craft.webp" alt="Petloxtus Vietnam Pet Product Manufacturing Workshop" class="lead-gate__bg-img" />
@@ -569,7 +556,6 @@ const faqs = [
                 <img
                   src="/assets/oem-packaging.webp"
                   alt="Custom OEM/ODM eco-friendly pet product packaging, kraft boxes, laser-engraved wooden tags, silicone mats, and E-TPU chew toys"
-                  loading="lazy"
                 />
                 <div class="story-photo-card__content">
                   <span data-i18n="story_2_eyebrow">Brand Packaging &amp; Full-Step QC</span>
@@ -584,7 +570,6 @@ const faqs = [
                 <img
                   src="/assets/qc-inspection.webp"
                   alt="Petloxtus quality control specialist inspecting solid wood cat tower and plush bed before export shipment"
-                  loading="lazy"
                 />
                 <div class="story-photo-card__content">
                   <span data-i18n="story_1_eyebrow">Skilled Artisans &amp; Sourcing • Vietnam</span>
@@ -903,6 +888,6 @@ const faqs = [
     <QuoteModal />
 
     <script src="/i18n.js?v=20261124" is:inline></script>
-    <script src="/script.js?v=20261124b" is:inline></script>
+    <script src="/script.js?v=20261124c" is:inline></script>
   </body>
 </html>

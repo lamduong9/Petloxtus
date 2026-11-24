@@ -114,33 +114,32 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  const isInternalReferrer =
-    typeof document.referrer === "string" &&
-    document.referrer.startsWith(window.location.origin);
+  function scrollToHashTarget() {
+    if (!window.location.hash || window.location.hash.length <= 1) return;
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const target = document.getElementById(id);
+    if (!target) return;
+    const header = document.querySelector(".site-header");
+    const offset = (header ? header.getBoundingClientRect().height : 84) + 16;
+    const top = Math.max(0, window.scrollY + target.getBoundingClientRect().top - offset);
+    window.scrollTo({ top, behavior: "auto" });
+  }
 
   if (leadGate) {
-    const hasHash = Boolean(window.location.hash && window.location.hash.length > 1);
-    if (
-      localStorage.getItem(STORAGE_KEYS.UNLOCKED) === "true" ||
-      hasHash ||
-      isInternalReferrer
-    ) {
-      unlockSite(loadSavedProfile());
-      if (hasHash) {
-        const target = document.getElementById(window.location.hash.slice(1));
-        if (target) {
-          requestAnimationFrame(() => {
-            target.scrollIntoView({ behavior: "auto", block: "start" });
-          });
-        }
-      }
-    } else {
-      document.body.classList.add("gate-locked");
-    }
-  } else {
-    // Visitor already browsing an internal page (/products, /services, etc.)
-    localStorage.setItem(STORAGE_KEYS.UNLOCKED, "true");
+    // Homepage opens immediately without blocking modal; Lead Gate can still be previewed from the footer button.
+    document.body.classList.remove("gate-locked");
+    leadGate.classList.add("is-hidden");
+    const saved = loadSavedProfile();
+    if (saved) prefillQuoteForm(saved);
   }
+
+  if (window.location.hash && window.location.hash.length > 1) {
+    requestAnimationFrame(scrollToHashTarget);
+    window.addEventListener("load", () => {
+      requestAnimationFrame(scrollToHashTarget);
+    });
+  }
+  window.addEventListener("hashchange", scrollToHashTarget);
 
   const skipGateBtn = document.getElementById("skip-gate-btn");
   if (skipGateBtn) {
